@@ -16,4 +16,21 @@ class PostController extends Controller
             'results' => $posts
         ]); 
     }
+    //aggiungo show
+    public function show($slug){
+        $post= Post::with('category','tags')->where('slug', $slug)->first();
+        //verifico se c'è qualcosa all' interno del database e dunque success avra' valore
+        if($post){
+            return response()->json([
+                'success' => true,
+                'post' => $post
+            ]);
+        }
+        else{
+            return response()->json([
+            'success' => false,
+            'error' => 'Nesssun post trovato'
+            ]);
+        }
+    }
 }
